@@ -34,29 +34,23 @@ touch $lock_file
 tmp_file="$(mktemp)"
 gorl ls | tail -n+2 >"$tmp_file"
 
-db_file="$data_dir/.db.txt"
-if [ ! -f "$db_file" ]; then
-	touch "$db_file"
-fi
-
 cat $tmp_file | while read d t duration filename; do
-	key="$filename|$duration"
+	fn=$(echo $filename | cut -d. -f1)
+	end=$(echo $filename | cut -d. -f2)
+	key="$fn"_"$duration"."$end"
 
-	# Skip to the next entry if the key already exists in the db
-	if grep -q "$key" "$db_file"; then
+	# Skip the file if it already exist
+	if ls "$data_dir" | grep -q "$key"; then
 		continue
 	fi
 
 	# The filename has been downloaded before, but the duration has
 	# changed. Remove the line from the db and download the file again
-	if grep -q "$filename" "$db_file"; then
-		tmp_db_file=$(mktemp)
-		grep -v "$filename" "$db_file" >"$tmp_db_file"
-		mv "$tmp_db_file" "$db_file"
+	if ls "$data_dir" | grep -q "$fn"; then
+		rm -f "$data_dir/$fn"*
 	fi
 
 	gorl dl -f "$filename" >"$data_dir/$filename"
-	echo "$filename|$duration" >>"$db_file"
 done
 
 rm -f "$lock_file" "$tmp_file"
