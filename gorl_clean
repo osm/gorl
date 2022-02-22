@@ -18,14 +18,7 @@ if [ -f "$lock_file" ]; then
 fi
 touch $lock_file
 
-db_file="$data_dir/.db.txt"
 find "$data_dir" -name "*.mp4" -mtime +4 -printf '%P\n' | while read filename; do
-	if grep -q "$filename" "$db_file"; then
-		tmp_db_file=$(mktemp)
-		grep -v "$filename" "$db_file" >"$tmp_db_file"
-		mv "$tmp_db_file" "$db_file"
-	fi
-
 	if [ -f "$data_dir/$filename" ]; then
 		rm -f "$data_dir/$filename"
 	fi
