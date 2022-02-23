@@ -13,7 +13,7 @@ func stream(address, username, password string, out io.Writer) {
 
 	url := getURL(
 		address,
-		fmt.Sprintf("flv?port=1935&app=bcs&stream=channel0_sub.bcs&token=%s", token),
+		fmt.Sprintf("flv?port=1935&app=bcs&stream=channel0_main.bcs&token=%s", token),
 	)
 
 	getRequest(url, out)
