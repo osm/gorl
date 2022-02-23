@@ -11,17 +11,8 @@ if [ ! -d "$data_dir" ]; then
 	exit 1
 fi
 
-lock_file="/tmp/gorl.lock"
-if [ -f "$lock_file" ]; then
-	echo "error: $(basename $0) is already running" >&2
-	exit 1
-fi
-touch $lock_file
-
 find "$data_dir" -name "*.mp4" -mtime +4 -printf '%P\n' | while read filename; do
 	if [ -f "$data_dir/$filename" ]; then
 		rm -f "$data_dir/$filename"
 	fi
 done
-
-rm "$lock_file"
