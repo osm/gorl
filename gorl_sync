@@ -50,7 +50,7 @@ cat $tmp_file | while read d t duration filename; do
 		rm -f "$data_dir/$fn"*
 	fi
 
-	gorl dl -f "$filename" >"$data_dir/$filename"
+	gorl dl -f "$filename" >"$data_dir/$key"
 done
 
 rm -f "$lock_file" "$tmp_file"
