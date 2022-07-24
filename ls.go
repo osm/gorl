@@ -22,11 +22,6 @@ func getLsDate(date string) (int, int, int) {
 }
 
 func ls(address, username, password, startDate, endDate string) {
-	token, err := getToken(address, username, password)
-	if err != nil {
-		exitf("%v\n", err)
-	}
-
 	startYear, startMonth, startDay := getLsDate(startDate)
 
 	var endYear, endMonth, endDay int
@@ -62,7 +57,7 @@ func ls(address, username, password, startDate, endDate string) {
 	})
 
 	resp, err := postRequest(
-		getURL(address, "/cgi-bin/api.cgi?cmd=Search&token="+token),
+		getURL(address, fmt.Sprintf("/cgi-bin/api.cgi?cmd=Search&user=%s&password=%s", username, password)),
 		bytes.NewBuffer(body),
 	)
 	if err != nil {
