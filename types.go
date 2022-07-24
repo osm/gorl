@@ -14,14 +14,14 @@ type Time struct {
 }
 
 type SearchResultFile struct {
-	EndTime   Time   `json:"EndTime"`
-	StartTime Time   `json:"StartTime"`
-	FrameRate int    `json:"frameRate"`
-	Height    int    `json:"height"`
-	Name      string `json:"name"`
-	Size      int    `json:"size"`
-	Type      string `json:"type"`
-	Width     int    `json:"width"`
+	EndTime   Time        `json:"EndTime"`
+	StartTime Time        `json:"StartTime"`
+	FrameRate int         `json:"frameRate"`
+	Height    int         `json:"height"`
+	Name      string      `json:"name"`
+	Size      interface{} `json:"size"`
+	Type      string      `json:"type"`
+	Width     int         `json:"width"`
 }
 
 type SearchResultStatus struct {
