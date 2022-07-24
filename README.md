@@ -49,6 +49,7 @@ $ gorl stream | mplayer -
 
 ## Support
 
-The program has been tested with the following model
+The program has been tested with the following models
 
 * RLC-410W with firmware v3.0.0.136_20121102
+* RLC-410W with firmware v3.1.0.739_22042505
