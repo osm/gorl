@@ -54,7 +54,8 @@ var (
 			address, username, password := getRequiredArgs(cmd)
 			startDate, _ := cmd.Flags().GetString("date")
 			endDate, _ := cmd.Flags().GetString("end-date")
-			ls(address, username, password, startDate, endDate)
+			filterHumans, _ := cmd.Flags().GetBool("humans")
+			ls(address, username, password, startDate, endDate, filterHumans)
 		},
 	}
 
@@ -94,6 +95,7 @@ func main() {
 
 	lsCmd.Flags().StringP("date", "d", "", "List recordings from -d <date>")
 	lsCmd.Flags().StringP("end-date", "e", "", "Combined with -d to list recordings until -e <date>")
+	lsCmd.Flags().BoolP("humans", "u", false, "Display recordings with humans")
 	rootCmd.AddCommand(lsCmd)
 
 	snapCmd.Flags().StringP("output-file", "o", "-", "Output file")

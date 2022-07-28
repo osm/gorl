@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"strings"
 	"time"
 )
 
@@ -21,7 +22,7 @@ func getLsDate(date string) (int, int, int) {
 	return year, int(month), day
 }
 
-func ls(address, username, password, startDate, endDate string) {
+func ls(address, username, password, startDate, endDate string, filterHumans bool) {
 	startYear, startMonth, startDay := getLsDate(startDate)
 
 	var endYear, endMonth, endDay int
@@ -68,6 +69,16 @@ func ls(address, username, password, startDate, endDate string) {
 	for _, file := range resp.Value.SearchResult.File {
 		startTime := toTime(&file.StartTime)
 		endTime := toTime(&file.EndTime)
+
+		// RLC-410W with firmware v3.1.0.739_22042505 seems to be
+		// naming recordings according to a specific pattern when the
+		// video contains a human or just a motion.
+		// 533C808 = motion
+		// 533CC00 = human
+		// 533CC08 = human
+		if filterHumans && !strings.Contains(file.Name, "533CC0") {
+			continue
+		}
 
 		fmt.Printf("%s\t%s\t\t%s\n",
 			startTime.Format("2006-01-02 15:04:05"),
