@@ -95,7 +95,7 @@ func main() {
 
 	lsCmd.Flags().StringP("date", "d", "", "List recordings from -d <date>")
 	lsCmd.Flags().StringP("end-date", "e", "", "Combined with -d to list recordings until -e <date>")
-	lsCmd.Flags().BoolP("humans", "u", false, "Display recordings with humans")
+	lsCmd.Flags().BoolP("humans", "f", false, "Display recordings with humans")
 	rootCmd.AddCommand(lsCmd)
 
 	snapCmd.Flags().StringP("output-file", "o", "-", "Output file")
